@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function getData(showAll) {
+            $.ajax({
+                type: "GET",
+                url: "/list",
+                dataType: 'json',
+                complete: function (data) {
+                    var items = JSON.parse(data.responseText);
+                    var table = "";
+                    var checkbox = "";
+                    for (var i = 0; i != items.length; i++) {
+                        if(showAll) {
+                            if (items[i].done == true) {
+                                var checkbox = "<div class=\"checkbox\"><label><input name=\"items\" type=\"checkbox\" onclick=\"setStatus()\" value=\"" + items[i].id + "\" checked ></label></div>";
+                            } else {
+                                var checkbox = "<div class=\"checkbox\"><label><input name=\"items\" type=\"checkbox\" onclick=\"setStatus()\" value=\"" + items[i].id + "\"></label></div>";
+                            }
+                            var d = new Date(items[i].created);
+                            var cDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+                            table += "<tr><td>" + items[i].desc + "</td><td>" + cDate + "</td><td>" + checkbox + "</td></tr>";
+                        } else {
+                            if (items[i].done == false) {
+                                var checkbox = "<div class=\"checkbox\"><label><input name=\"items\" type=\"checkbox\" onclick=\"setStatus()\" value=\"" + items[i].id + "\"></label></div>";
+                                var d = new Date(items[i].created);
+                                var cDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+                                table += "<tr><td>" + items[i].desc + "</td><td>" + cDate + "</td><td>" + checkbox + "</td></tr>";
+                            }
+                        }
+                    }
+                    $('#table').find('tbody').empty().append(table);
+                },
+                error: function () {
+                    alert('error: Could not get Value.')
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            $("#showall").change(function() {
+                if(this.checked) {
+                    getData(true);
+                } else {
+                    getData(false);
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $('#btn1').click(function () {
+                var item = new Object();
+                item.desc = $('#desc').val();
+                $.ajax({
+                    type: "POST",
+                    url: "/list",
+                    dataType: 'json',
+                    data: JSON.stringify(item),
+                    success: (function () {
+                        alert("New task have been added");
+                        getData(true)
+                    })
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            getData(true);
+        });
+
+        function setStatus() {
+            $('input[name="items"]').change(function(){
+                if($(this).is(":checked")){
+                    var id = $(this).val().toString();
+                    saveStatus(id, true);
+                    $('input[name="items"]').events.cleanUp();
+                }
+                else if($(this).is(":not(:checked)")){
+                    var id = $(this).val().toString();
+                    saveStatus(id, false);
+                    $('input[name="items"]').events.cleanUp();
+                }
+                alert("do");
+            });
+        }
+
+        function saveStatus(id, status) {
+            var id_item = new Object();
+            id_item.id = id;
+            id_item.status = status;
+            $.ajax({
+                type: "POST",
+                url: "/list",
+                dataType: 'json',
+                data: JSON.stringify(id_item),
+                complete: (function () {
+                    alert("Task has been updated");
+                    if($("#showall").is(":checked")) {
+                        getData(true);
+                    } else {
+                        getData(false);
+                    }
+                })
+            });
+        }
+
+    </script>
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1> Welcome to ToDoList manager</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form action='${pageContext.request.contextPath}/' style="width:300px" method = "post" id="myForm">
+                        <div class="form-group">
+                            <label for="desc">Action Description</label>
+                            <textarea class="form-control" id="desc" placeholder="Enter desc" name ="desc"></textarea>
+                        </div>
+                        <input type='hidden' name='task' value="add"> </br>
+                        <button type="button" class="btn btn-default" onclick="addItem()" id="btn1">Add Action</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-4">
+            <!--            <h3>Column 3</h3>
+                        <p>Lorem ipsum dolor..</p>-->
+        </div>
+    </div>
+</div><br>
+<div class="container">
+    <h2>ToDo List.</h2>
+    <div class="checkbox">
+        <label><input type="checkbox" value=""  id = "showall" checked>Show All</label>
+    </div>
+    <table class="table table-bordered" id='table'>
+        <thead>
+        <tr>
+            <th>Task Description</th>
+            <th>Created</th>
+            <th>Done</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+</body>
+</html>
