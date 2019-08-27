@@ -64,4 +64,5 @@ public class HibernateRun {
         Session session = factory.openSession();
         return (List<User>) session.createQuery("From User").list();
     }
+
 }
