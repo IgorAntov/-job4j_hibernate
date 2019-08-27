@@ -1,6 +1,6 @@
 package ru.job4jhibernate.carsstorage.models;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -8,11 +8,21 @@ import java.util.Objects;
  * @version $Id$
  * @since 0.1
  */
+@Entity
+@Table(name = "car")
 public class Car {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @ManyToOne
+    @JoinColumn(name = "engine_id")
     private Engine engine;
+    @ManyToOne
+    @JoinColumn(name = "car_body_id")
     private CarBody carBody;
+    @ManyToOne
+    @JoinColumn(name = "transmission_id")
     private Transmission transmission;
 
     public Car() {
@@ -72,7 +82,6 @@ public class Car {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, name, engine, carBody, transmission);
     }
 }

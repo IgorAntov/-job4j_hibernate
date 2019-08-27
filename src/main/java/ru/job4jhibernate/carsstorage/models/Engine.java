@@ -1,5 +1,6 @@
 package ru.job4jhibernate.carsstorage.models;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -7,12 +8,15 @@ import java.util.Objects;
  * @version $Id$
  * @since 0.1
  */
+@Entity
+@Table(name = "engine")
 public class Engine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
 
     public Engine() {
-
     }
 
     public int getId() {
@@ -42,7 +46,6 @@ public class Engine {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, name);
     }
 }
