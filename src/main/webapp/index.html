@@ -27,13 +27,13 @@
                             }
                             var d = new Date(items[i].created);
                             var cDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-                            table += "<tr><td>" + items[i].desc + "</td><td>" + cDate + "</td><td>" + checkbox + "</td></tr>";
+                            table += "<tr><td>" + items[i].description + "</td><td>" + cDate + "</td><td>" + checkbox + "</td></tr>";
                         } else {
                             if (items[i].done == false) {
                                 var checkbox = "<div class=\"checkbox\"><label><input name=\"items\" type=\"checkbox\" onclick=\"setStatus()\" value=\"" + items[i].id + "\"></label></div>";
                                 var d = new Date(items[i].created);
                                 var cDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-                                table += "<tr><td>" + items[i].desc + "</td><td>" + cDate + "</td><td>" + checkbox + "</td></tr>";
+                                table += "<tr><td>" + items[i].description + "</td><td>" + cDate + "</td><td>" + checkbox + "</td></tr>";
                             }
                         }
                     }
@@ -58,7 +58,7 @@
         $(document).ready(function () {
             $('#btn1').click(function () {
                 var item = new Object();
-                item.desc = $('#desc').val();
+                item.description = $('#addesc').val();
                 $.ajax({
                     type: "POST",
                     url: "/list",
@@ -93,14 +93,14 @@
         }
 
         function saveStatus(id, status) {
-            var id_item = new Object();
-            id_item.id = id;
-            id_item.status = status;
+            var item = new Object();
+            item.id = id;
+            item.done = status;
             $.ajax({
                 type: "POST",
                 url: "/list",
                 dataType: 'json',
-                data: JSON.stringify(id_item),
+                data: JSON.stringify(item),
                 complete: (function () {
                     alert("Task has been updated");
                     if($("#showall").is(":checked")) {
@@ -125,8 +125,8 @@
                 <div class="panel-body">
                     <form action='${pageContext.request.contextPath}/' style="width:300px" method = "post" id="myForm">
                         <div class="form-group">
-                            <label for="desc">Action Description</label>
-                            <textarea class="form-control" id="desc" placeholder="Enter desc" name ="desc"></textarea>
+                            <label for="addesc">Action Description</label>
+                            <textarea class="form-control" id="addesc" placeholder="Enter addesc" name ="addesc"></textarea>
                         </div>
                         <input type='hidden' name='task' value="add"> </br>
                         <button type="button" class="btn btn-default" onclick="addItem()" id="btn1">Add Action</button>

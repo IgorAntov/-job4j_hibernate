@@ -1,5 +1,6 @@
 package ru.job4jhibernate.todolist.servlets;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.job4jhibernate.todolist.models.Item;
 import ru.job4jhibernate.todolist.store.DbActionList;
@@ -30,24 +31,13 @@ public class ListControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        BufferedReader reader = req.getReader();
-        StringBuilder json = new StringBuilder();
-        String aux;
-        while ((aux = reader.readLine()) != null) {
-            json.append(aux);
-        }
-        if (json.toString().contains("id")) {
-            String id = json.toString().replaceAll("\\D+", "");
-            Item item = DbActionList.getInstance().findItem(id);
-            if (json.toString().contains("false")) {
-                item.setDone(false);
-            } else {
-                item.setDone(true);
-            }
-            DbActionList.getInstance().updateItem(item);
-
+        JsonParser jsonParser = mapper.getFactory().createParser(req.getInputStream());
+        Item item = mapper.readValue(jsonParser, Item.class);
+        if (item.getId() != 0) {
+            Item tempItem = DbActionList.getInstance().findItem(String.valueOf(item.getId()));
+            tempItem.setDone(item.isDone());
+            DbActionList.getInstance().updateItem(tempItem);
         } else {
-            Item item = mapper.readValue(json.toString(), Item.class);
             item.setCreated(new Timestamp(System.currentTimeMillis()));
             DbActionList.getInstance().addItem(item);
             resp.setContentType("text/json");

@@ -1,6 +1,7 @@
 package ru.job4jhibernate.todolist.models;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
  * @author Igor Antropov
@@ -9,7 +10,7 @@ import java.sql.Timestamp;
  */
 public class Item {
     private int id;
-    private String desc;
+    private String description;
     private Timestamp created;
     private boolean done;
 
@@ -25,20 +26,20 @@ public class Item {
         this.id = id;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public Timestamp getCreated() {
         return created;
     }
 
     public void setCreated(Timestamp created) {
         this.created = created;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isDone() {
@@ -49,4 +50,20 @@ public class Item {
         this.done = done;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id == item.id &&
+                done == item.done &&
+                Objects.equals(description, item.description) &&
+                Objects.equals(created, item.created);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, description, created, done);
+    }
 }
