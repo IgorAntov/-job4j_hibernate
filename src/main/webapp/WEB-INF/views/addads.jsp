@@ -38,7 +38,7 @@
         <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form action='${pageContext.request.contextPath}/addads' style="width:300px" method = "post" id="myForm" enctype="multipart/form-data">
+                    <form action='${pageContext.request.contextPath}/addads' method = "post" id="myForm" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="title">Title:</label>
                             <input type="text" class="form-control" id="title" placeholder="Enter title" name ="title">
