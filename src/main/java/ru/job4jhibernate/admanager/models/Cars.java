@@ -1,6 +1,11 @@
 package ru.job4jhibernate.admanager.models;
 
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -12,16 +17,33 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "cars")
+@FilterDef(name="brandFilter"
+        , parameters=
+@ParamDef( name="brand", type = "integer")
+
+
+)
+@FilterDef(name="dateFilter",
+        parameters=@ParamDef( name="dateParam", type="date" ) )
+@Filter(name = "brandFilter", condition = "brand_id = :brand")
+@Filter(
+        name = "dateFilter",
+        condition="created >= :dateParam"
+)
 public class Cars {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String title;
     private String addesc;
     private String cost;
     private String mileage;
     private String power;
     private String status;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created")
+    private Date created = new Date();
     @ManyToOne
     @JoinColumn(name = "brand_id", foreignKey=@ForeignKey(name = "fk_brand_id"))
     private Brand brand;
@@ -50,6 +72,7 @@ public class Cars {
             foreignKey= @ForeignKey(name = "fk_cars_id") ,
             inverseJoinColumns =  @JoinColumn(name = "image_id", nullable = false, updatable = false, foreignKey=@ForeignKey(name = "fk_image_id"))
     )
+
 
     Set<Image> imageSet = new HashSet<>();
 
@@ -175,6 +198,14 @@ public class Cars {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     @Override

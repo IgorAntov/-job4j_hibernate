@@ -79,7 +79,7 @@
                         </div>
                         <!-- drive section-->
                         <div class="form-group">
-                            <label for="drive">Brand:</label>
+                            <label for="drive">Drive:</label>
                             <select class="form-control" id="drive" name="drive">
                                 <c:forEach items="${drive}" var="drive">
                                     <option value="<c:out value="${drive.id}"></c:out>"><c:out value="${drive.name}"></c:out></option>
@@ -88,7 +88,7 @@
                         </div>
                         <!-- engine section-->
                         <div class="form-group">
-                            <label for="engine">Brand:</label>
+                            <label for="engine">Engine:</label>
                             <select class="form-control" id="engine" name="engine">
                                 <c:forEach items="${engine}" var="engine">
                                     <option value="<c:out value="${engine.id}"></c:out>"><c:out value="${engine.name}"></c:out></option>
@@ -97,7 +97,7 @@
                         </div>
                         <!-- transmission section-->
                         <div class="form-group">
-                            <label for="transmission">Brand:</label>
+                            <label for="transmission">Transmission:</label>
                             <select class="form-control" id="transmission" name="transmission">
                                 <c:forEach items="${transmission}" var="transmission">
                                     <option value="<c:out value="${transmission.id}"></c:out>"><c:out value="${transmission.name}"></c:out></option>

@@ -70,13 +70,11 @@
         $('input[name="foto"]').change(function(){
             if($(this).is(":checked")){
                 var id = $(this).val().toString();
-                alert("do true");
                 setFotoFilter(true);
                 $('input[name="foto"]').events.cleanUp();
             }
             else if($(this).is(":not(:checked)")){
                 var id = $(this).val().toString();
-                alert("do false");
                 setFotoFilter(false);
                 $('input[name="foto"]').events.cleanUp();
             }
@@ -92,7 +90,6 @@
     }
 
     function setFilter() {
-  //      filter.foto = $('#foto').val();
         filter.brand = $('#brand').val();
         filter.period = $('#period').val();
         getList(filter)
@@ -164,29 +161,7 @@
         </tr>
         </thead>
         <tbody>
-
         </tbody>
-        <%--
-                </tr>
-                <c:forEach items="${carsList}" var="car">
-                    <tr>
-                        <td><b><a href="${pageContext.request.contextPath}/showads?id=<c:out value="${car.id}"></c:out>"><c:out value="${car.title}"></c:out></a></b></td></tr></br>
-                    <td>
-                        Author: <c:out value="${car.aduser.name}"></c:out> </br>
-                        Cost:  <c:out value="${car.cost}"></c:out> </br>
-                        Mileage:  <c:out value="${car.mileage}"></c:out> </br>
-                        Power:  <c:out value="${car.power}"></c:out> </br>
-                        Brand:  <c:out value="${car.brand.name}"></c:out> </br>
-                        Engine:  <c:out value="${car.engine.name}"></c:out> </br>
-                        Body:  <c:out value="${car.body.name}"></c:out> </br>
-                        Driver:  <c:out value="${car.drive.name}"></c:out> </br>
-                        Transmission: <c:out value="${car.transmission.name}"></c:out> </br>
-                        Wheel: <c:out value="${car.wheel.name}"></c:out> </br>
-                        Status: <c:out value="${car.status}"></c:out> </br>
-                    </td>
-                    </tr>
-                </c:forEach>
-        --%>
     </table>
 </div>
 <br>
