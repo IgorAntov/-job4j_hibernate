@@ -5,18 +5,15 @@ hibernate
 
 **Содержание**
 
-[TOCM]
-
-[TOC]
-#Описание
+# Описание
 Задание выполнено на основе базы данных PostgreSQL, библиотеки Hibernate, страниц  JSP, JSTL. Mapping базы данных выполнен при помощи аннотаций. Динамическое обновление контента web страниц (лист объявлений) на стороне клиента основано на REST API Json. В проекте не используется модель MVC.
 
-#Структура базы даных
+# Структура базы даных
 
-##Диаграмма БД
+## Диаграмма БД
 ![](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/resources/imagesProject/DB.png?raw=true)
 
-##Таблицы БД
+## Таблицы БД
 Основная таблица:** Cars**
 поля: 
 - title - заглавие;
@@ -37,7 +34,7 @@ hibernate
 **связь ManyToMany при помощи линк-таблицы *cars_images* с таблицей:**
 - *image* - сущьность Image{id, name};
 
-#Структура и описание проекта
+# Структура и описание проекта
 
 ## Models
 
@@ -273,7 +270,7 @@ public class Cars {
 }
 
 ```
-##Utils
+## Utils
 
 Имеет в своем составе только один класс сингелтон **HibernateSessionFactoryUtil** c конфигурацией окружения Hibernate. 
 ```java
@@ -321,44 +318,44 @@ public class HibernateSessionFactoryUtil {
 </session-factory>
 </hibernate-configuration>
 ```
-##Services
+## Services
 Для инициализации проекта и создания необходимых записей в структуре БД проекта используется класс CarsService. Класс выполняет вставку записей в таблицы базы данных   brand, driveI, engine, transmission, wheel. Это необходмо для того, чтобы при выполнении добавления объявления в проект, можно было выбрать из выпадающих списков характеристики автомобиля.
 
 `<link>` : <https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/services/CarsService.java>
 
-##DAO
+## DAO
 Data Access Object Class. 
 Уровень Peristance в задании реализован в классе CarsStore. 
 Класс выполняет основные операции вставки, обновления, поиска в БД. Класс реализует DAO интерфесы доступа относительно каждой сущности.
 
 `<link>` : <https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/dao/CarsStore.java>
 
-##Servlets
+## Servlets
 
 Обмен данными между клиентом и сервером реализован на сервлетах, а именно:
 
-###Список объявлений
+### Список объявлений
 - [CarList.java](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/servlets/CarList.java)
 -  [index.jsp](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/webapp/WEB-INF/views/index.jsp)
-###Регистрация пользователя
+### Регистрация пользователя
 - [AddUser.java](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/servlets/AddUser.java)
 - [adduser.jsp](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/webapp/WEB-INF/views/adduser.jsp)
-###Вход на сайт
+### Вход на сайт
 - [SignIn.java](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/servlets/SignIn.java)
 - [signin.jsp](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/webapp/WEB-INF/views/signin.jsp)
-###Выход
+### Выход
 - [SignOut.java](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/servlets/SignOut.java)
-###Вставка объявления:
+### Вставка объявления:
 - [AddAds.java](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/servlets/AddAds.java)
 - [addads.jsp](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/webapp/WEB-INF/views/addads.jsp)
-###Просмотр конкретнного объявления :
+### Просмотр конкретнного объявления :
 - [ShowAds.java](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/servlets/ShowAds.java)
 - [showads.jsp](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/webapp/WEB-INF/views/showads.jsp)
-###Выгрузка изображения :
+### Выгрузка изображения :
 - [DownloadImage.java](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/servlets/DownloadImage.java)
-###Изменение статуса объявления :
+### Изменение статуса объявления :
 - [AdsUpdate.java](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/java/ru/job4jhibernate/admanager/servlets/AdsUpdate.java)
-##Фильтрация
+## Фильтрация
 Динамическая фильтрация выполнена при помощи аннотаций в классе Cars
 ```java
 @FilterDef(name="brandFilter", parameters=@ParamDef( name="brand", type = "integer"))
@@ -414,16 +411,16 @@ public class Cars {
         }    }
     
 
-#Навигация по сайту проекта
-##Главная старница
+# Навигация по сайту проекта
+## Главная старница
 ![](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/resources/imagesProject/listForm.png?raw=true)
-##Вход на сайт
+## Вход на сайт
 ![](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/resources/imagesProject/regForm.png?raw=true)
-##Добавление объявления
+## Добавление объявления
 ![](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/resources/imagesProject/addForm.png?raw=true)
-##Просмотр объявление 
+## Просмотр объявление 
 Поменять статус объявления может только пользователь который его создал. Проверка статуса выполняется на странице showads.jsp
 ![](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/resources/imagesProject/infoForm.png?raw=true)
-##Фильтрация
+## Фильтрация
 ![](https://github.com/IgorAntov/-job4j_hibernate/blob/master/src/main/resources/imagesProject/filterForm.png?raw=true)
 
