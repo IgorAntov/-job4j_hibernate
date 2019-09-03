@@ -1,8 +1,12 @@
 package ru.job4jhibernate.admanager.dao;
 
+import org.hibernate.Session;
 import org.hibernate.query.Query;
+import ru.job4jhibernate.admanager.filters.FilterList;
 import ru.job4jhibernate.admanager.models.*;
-
+import ru.job4jhibernate.admanager.utils.HibernateSessionFactoryUtil;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -162,5 +166,46 @@ public class CarsStore implements DaoCars, DaoAdUser, DaoBody, DaoBrand, DaoDriv
     @Override
     public List<Wheel> findAllWheel() {
         return daoWrepper.tx(session -> (List<Wheel>) session.createQuery("From Wheel").list());
+    }
+
+    @Override
+    public List<Cars> filtersCars(FilterList filterList) {
+        final Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+
+        try {
+            List<Cars> result;
+            filterEnable(filterList, session);
+            result = (List<Cars>) session.createQuery("From Cars c").list();
+            filterDisable(filterList, session);
+            return result;
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+    private void filterDisable(FilterList filterList, Session session) {
+        if (!filterList.getPeriod().isEmpty()) {
+            session.disableFilter("dateFilter");
+        }
+        if (!filterList.getBrand().isEmpty()) {
+            session.disableFilter("brandFilter");
+        }
+    }
+
+    private void filterEnable(FilterList filterList, Session session) {
+        if (!filterList.getBrand().isEmpty()) {
+            session.enableFilter("brandFilter").setParameter("brand", Integer.parseInt(filterList.getBrand()));
+        }
+        if (!filterList.getPeriod().isEmpty()) {
+            Date currentDate = new Date();
+            Calendar c = Calendar.getInstance();
+            c.setTime(currentDate);
+            c.add(Calendar.DATE, -1 * Integer.parseInt(filterList.getPeriod()));
+            Date currentDatePlusDays = c.getTime();
+            session.enableFilter("dateFilter").setParameter("dateParam", currentDatePlusDays);
+        }
     }
 }

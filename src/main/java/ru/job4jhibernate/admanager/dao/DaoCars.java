@@ -1,5 +1,6 @@
 package ru.job4jhibernate.admanager.dao;
 
+import ru.job4jhibernate.admanager.filters.FilterList;
 import ru.job4jhibernate.admanager.models.Cars;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface DaoCars {
     List<Cars> findAllCars();
 
     Cars findCarById(String id);
+
+    List<Cars> filtersCars(FilterList filterList);
 }
