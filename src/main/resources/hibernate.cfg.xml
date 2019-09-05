@@ -8,13 +8,5 @@
         <property name="connection.password">pcontrol</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
         <property name="show_sql">true</property>
-        <mapping resource="ru/job4jhibernate/models/User.hbm.xml"></mapping>
-        <mapping resource="ru/job4jhibernate/models/Item.hbm.xml"></mapping>
-<!--
-        <mapping resource="ru/job4jhibernate/models/Engine.hbm.xml"></mapping>
-        <mapping resource="ru/job4jhibernate/models/CarBody.hbm.xml"></mapping>
-        <mapping resource="ru/job4jhibernate/models/Transmission.hbm.xml"></mapping>
-        <mapping resource="ru/job4jhibernate/models/Car.hbm.xml"></mapping>
--->
     </session-factory>
 </hibernate-configuration>
