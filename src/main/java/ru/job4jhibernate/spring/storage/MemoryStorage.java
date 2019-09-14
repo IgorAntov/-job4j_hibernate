@@ -1,5 +1,6 @@
 package ru.job4jhibernate.spring.storage;
 
+import org.springframework.stereotype.Component;
 import ru.job4jhibernate.spring.models.User;
 
 /**
@@ -7,6 +8,7 @@ import ru.job4jhibernate.spring.models.User;
  * @version $Id$
  * @since 0.1
  */
+@Component(value = "memory")
 public class MemoryStorage implements Storage{
 
     @Override

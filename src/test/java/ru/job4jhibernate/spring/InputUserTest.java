@@ -12,6 +12,8 @@ import static org.hamcrest.Matchers.is;
  * @author Igor Antropov
  * @version $Id$
  * @since 0.1
+ *
+ * Annotation-based configuration Test
  */
 public class InputUserTest {
 
