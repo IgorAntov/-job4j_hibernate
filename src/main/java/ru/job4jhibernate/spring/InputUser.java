@@ -7,7 +7,7 @@ import ru.job4jhibernate.spring.models.User;
  * @version $Id$
  * @since 0.1
  */
-public abstract class InputUser  {
+public abstract class InputUser {
 
-    public abstract String add(User user);
+    public abstract boolean add(User user);
 }

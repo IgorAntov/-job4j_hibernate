@@ -16,7 +16,7 @@ public class InputUserToMemory extends InputUser {
     }
 
     @Override
-    public String add(User user) {
+    public boolean add(User user) {
         return storage.addUser(user);
     }
 }

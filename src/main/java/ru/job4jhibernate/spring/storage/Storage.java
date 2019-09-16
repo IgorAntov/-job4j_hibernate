@@ -9,5 +9,5 @@ import ru.job4jhibernate.spring.models.User;
  */
 public interface Storage {
 
-    String addUser(User user);
+    boolean addUser(User user);
 }

@@ -15,11 +15,11 @@ public class AppConfig {
 
     @Bean(name = "memoryStorage")
     public InputUserToMemory getInputUserToMemory() {
-        return new InputUserToMemory(new MemoryStorage());
+        return new InputUserToMemory(MemoryStorage.getInstance());
     }
 
     @Bean(name = "jdbcStorage")
     public InputUserToDb getInputUserToDB() {
-        return new InputUserToDb(new JDBCStorage());
+        return new InputUserToDb(JDBCStorage.getInstance());
     }
 }

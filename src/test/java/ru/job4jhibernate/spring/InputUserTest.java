@@ -2,9 +2,7 @@ package ru.job4jhibernate.spring;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.job4jhibernate.spring.models.User;
 
 import static org.hamcrest.Matchers.is;
@@ -13,8 +11,6 @@ import static org.hamcrest.Matchers.is;
  * @author Igor Antropov
  * @version $Id$
  * @since 0.1
- *
- * Annotation-based configuration Test
  */
 public class InputUserTest {
 
@@ -24,7 +20,7 @@ public class InputUserTest {
         context.register(AppConfig.class);
         context.refresh();
         InputUser inputUser = context.getBean("memoryStorage", InputUser.class);
-        Assert.assertThat(inputUser.add(new User()), is("Saved in MemoryStorage"));
+        Assert.assertThat(inputUser.add(new User()), is(true));
     }
 
     @Test
@@ -33,6 +29,6 @@ public class InputUserTest {
         context.register(AppConfig.class);
         context.refresh();
         InputUser inputUser = context.getBean("jdbcStorage", InputUser.class);
-        Assert.assertThat(inputUser.add(new User()), is("Saved in JDBCStorage"));
+        Assert.assertThat(inputUser.add(new User()), is(true));
     }
 }
