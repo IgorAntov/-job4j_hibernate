@@ -7,7 +7,7 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
-     <context:component-scan base-package="ru.job4jhibernate.spring"/>
+<!--     <context:component-scan base-package="ru.job4jhibernate.spring"/>-->
 
 <!--
     <bean id="memory" class="ru.job4jhibernate.spring.storage.MemoryStorage">
